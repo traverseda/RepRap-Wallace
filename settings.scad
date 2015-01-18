@@ -18,3 +18,7 @@ m3_size = 3;
 m3_nut_size = 6;
 m4_size = 4;
 motor_shaft_size = 5;
+
+// ratio for converting diameter to apothem
+da6 = 1 / cos(180 / 6) / 2;
+da8 = 1 / cos(180 / 8) / 2;
