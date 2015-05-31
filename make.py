@@ -36,3 +36,20 @@ for key,value in config:
         pass
         for count in value:
             pass
+base_end_2off.scad
+bed_mounts.scad
+feet.scad
+idler_pulleys.scad
+idler_pulleys_single_bearing.scad
+leadscrew_couplers.scad
+make.py
+plates.scad
+pulley with collar.scad
+settings.scad
+wallace.scad
+x_carriage.scad
+x_end_left.scad
+x_end_right.scad
+y_bearing_retainers.scad
+y_idler.scad
+z_top_clamps.scad

@@ -46,10 +46,11 @@ module x_end(motor = 0) mirror([(motor == 0) ? 1 : 0, 0, 0]) difference() {
 			}
 		}
 	}
+    // x rod slots and clamping screw holes
 	translate([0, 0, (x_rod_spacing + rod_size + 8) / 2]) {
 		for(end = [0, 1]) mirror([0, 0, end]) translate([motor_casing / 4 + rod_size / 2, 0, -(x_rod_spacing + rod_size + 8) / 2 - 1]) cylinder(r = bearing_size / 2 - .05, h = bearing_length, $fn = 30);
 		for(side = [1, -1]) render(convexity = 5) translate([0, bearing_size / 2 + rod_size / 2 + 3, side * x_rod_spacing / 2]) rotate([0, 90, 0]) {
-			//cylinder(r = rod_size / 2, h = motor_casing / 2 + rod_size + bearing_size + 10, center = true, $fn = 30);
+			cylinder(r = rod_size / 2, h = motor_casing / 2 + rod_size + bearing_size + 10, center = true, $fn = 30);
 			difference() {
 				translate([0, 0, (motor > -1) ? rod_size / 2 + 2 : 0]) intersection() {
 					rotate(45) cube([rod_size + 2, rod_size + 2, motor_casing / 2 + rod_size + bearing_size + 10], center = true);
@@ -69,6 +70,8 @@ module x_end(motor = 0) mirror([(motor == 0) ? 1 : 0, 0, 0]) difference() {
 			translate([0, 0, bearing_size / 4 + .5]) cylinder(r = m3_nut_size * da6, h = 100, center = false, $fn = 6);
 		}
 	}
+    // hole for the z drive bolt
 	translate([-(motor_casing / 4 + rod_size / 2), 0, 5]) rotate(90) cylinder(r = rod_nut_size / 2, h = x_rod_spacing + 8 + rod_size, $fn = 6);
+    // smoothbore rod
 	translate([(motor_casing / 4 + rod_size / 2), 0, 5]) %rotate(180 / 8) cylinder(r = rod_size * da8, h = 200, center = true, $fn = 8);
 }

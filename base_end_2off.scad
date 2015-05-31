@@ -3,13 +3,44 @@ include <settings.scad>;
 !base_end();
 
 module base_end() difference() {
-	linear_extrude(height = end_height, convexity = 5) difference() {
-		square([yz_motor_distance + motor_casing - motor_screw_spacing + 10, motor_casing + rod_size * 4], center = true);
-		for(end = [1, -1]) {
-			for(side = [1, -1]) translate([end * (yz_motor_distance + motor_casing - motor_screw_spacing) / 2, side * motor_screw_spacing / 2, 0]) circle(m3_size * da6, $fn = 6);
-			translate([end * (yz_motor_distance + motor_casing) / 2, 0, 0]) circle(motor_screw_spacing / 2);
-		}
-	}
+    union() {
+        linear_extrude(height = end_height, convexity = 5) difference() {
+            square([yz_motor_distance + motor_casing - motor_screw_spacing + 10, motor_casing + rod_size * 4], center = true);
+            for(end = [1, -1]) {
+                for(side = [1, -1]) translate([end * (yz_motor_distance + motor_casing - motor_screw_spacing) / 2, side * motor_screw_spacing / 2, 0]) circle(m3_size * da6, $fn = 6);
+                translate([end * (yz_motor_distance + motor_casing) / 2, 0, 0]) circle(motor_screw_spacing / 2);
+            }
+        }
+        // z stop sensor attachment
+        translate([(yz_motor_distance + motor_casing - motor_screw_spacing + 10)/2 - 20,
+                    -m3_nut_height-(z_stop_mount_y_buffer*2)-(motor_casing + (rod_size*4))/2,
+                    0]){
+            difference () {
+                cube([m3_nut_size+z_stop_screw_spacing+(z_stop_mount_x_buffer*2),
+                      m3_nut_height+(z_stop_mount_y_buffer*2),
+                      m3_nut_size+z_stop_mount_z_buffer]);
+                // holes for bolting
+                for(side = [0,1]) {
+                    translate([(m3_nut_size+(z_stop_mount_x_buffer*2))/2+side*z_stop_screw_spacing,
+                               m3_nut_height/2+z_stop_mount_y_buffer,
+                               m3_nut_size/2]){
+                        cube([m3_nut_size,m3_nut_height,m3_nut_size],center=true);
+                        if (z_stop_side_holes)
+                         rotate([0,90,0])
+                          translate([0,0,(side-.5)*(z_stop_mount_x_buffer+m3_nut_size)])
+                           cylinder(h=z_stop_mount_x_buffer,r=m3_size * da6, $fn = 6, center=true);
+                        if (z_stop_bottom_holes)
+                          translate([0,0,(z_stop_mount_z_buffer+m3_nut_size)/2])
+                           cylinder(h=z_stop_mount_z_buffer,r=m3_size * da6, $fn = 6, center=true);
+
+                        rotate([90,0,0])
+                         translate([0,0,(z_stop_mount_y_buffer+m3_nut_height)/2])
+                          cylinder(h=z_stop_mount_y_buffer,r=m3_size * da6, $fn = 6, center=true);
+                    }
+                }
+            }
+        }
+    }
 	for(end = [1, -1]) translate([end * (yz_motor_distance + motor_casing) / 2, 0, 3]) linear_extrude(height = end_height, convexity = 5) square(motor_casing, center = true);
 	for(side = [1, -1]) translate([0, side * (motor_casing / 2 + rod_size), rod_size / 2 + bearing_size / 2]) rotate([90, 180 / 8, 90]) {
 		cylinder(r = rod_size * da8, h = yz_motor_distance + motor_casing + 20, center = true, $fn = 8);
