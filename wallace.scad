@@ -11,7 +11,8 @@ use <x_end_left.scad>;
 //use <x_end_right.scad>;
 use <bed_mounts.scad>;
 use <y_bearing_retainers.scad>;
-use <base_end_2off.scad>;
+use <base_end_2off_left.scad>;
+use <z_stop_arm.scad>;
 
 
 //The following section positions parts for rendering the assembled machine.
@@ -20,6 +21,7 @@ use <base_end_2off.scad>;
 	for(end = [1, -1]) translate([0, end * motor_screw_spacing / 2 + 5, -bearing_size + bearing_size * sqrt(2) / 4]) rotate([-90, 0, 180]) y_bearing_retainer();
 	for(side = [0, 1]) mirror([0, side, 0]) translate([yz_motor_distance / 2 - bearing_size / 2, -motor_casing / 2 - rod_size * 2 - 10, -bearing_size + bearing_size * sqrt(2) / 4]) rotate([90, 0, 0]) bed_mount();
 	translate([-yz_motor_distance / 2 + rod_size - motor_casing / 4 - rod_size / 2, 0, 60 + (x_rod_spacing + 8 + rod_size) / 2]) rotate([0, 180, 0]) x_end(0);
+	translate([-distance_between_x_end_cylinders/2 -yz_motor_distance / 2 + rod_size - motor_casing / 4 - rod_size / 2, -1-x_end_front_face_y_offset, 60 - z_stop_arm_height + (x_rod_spacing + 8 + rod_size) / 2]) rotate([180, -90, 0]) z_stop_arm();
 	translate([140, 0, 60 + (x_rod_spacing + 8 + rod_size) / 2]) rotate([0, 180, 0]) {
 		x_end(2);
 		translate([0, 8 + rod_size, 0]) rotate([90, 0, 0]) translate([0, (x_rod_spacing + 8 + rod_size) / 2, rod_size / 2 - 2 - bearing_size / 2 - 4 - idler_pulley_width - 1.5]) idler_pulley(true);
