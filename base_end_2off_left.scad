@@ -51,6 +51,30 @@ module base_end(left = true) difference() {
                 }
             }
         }
+        // motor supports
+        sides= left ? [1,-1] : [1];
+        for ( side = sides ){
+            difference(){
+                translate ([side*((yz_motor_distance - motor_screw_spacing + 10)/2+motor_casing - yz_motor_distance/4), 0, end_height/2])
+                    cube([motor_casing - yz_motor_distance/2, motor_casing + rod_size*4, end_height],center=true);
+                translate ([side*((yz_motor_distance - motor_screw_spacing + 10)/2+motor_casing - yz_motor_distance/4 + (motor_casing - yz_motor_distance/2)/2), 0, end_height])
+                  resize([motor_casing*2 - yz_motor_distance,motor_casing + rod_size*4,2*(end_height-3)])
+                    rotate([90,0,0])
+                      cylinder($fn=4,center=true);
+                for ( edge = [1,-1]) {
+                  translate ([side*((yz_motor_distance - motor_screw_spacing + 10)/2+motor_casing - yz_motor_distance/4 + (motor_casing - yz_motor_distance/2)/2), edge*(motor_casing + rod_size*4)/2, end_height/2])
+                    resize([2*(motor_casing - yz_motor_distance/2), rod_size*4, end_height])
+                      cylinder($fn=32,center=true);
+                }
+                translate([side*((yz_motor_distance + motor_casing) / 2),0,0]){
+                  cylinder(h=3,r=motor_screw_spacing / 2);
+                  for(edge = [1,-1]){
+                    translate([side*(motor_screw_spacing/2), edge*motor_screw_spacing / 2,0])
+                      cylinder(h=3,r=m3_size * da6);
+                  }
+                }
+            }
+        }
     }
     // motor cutouts
 	for(end = [1, -1]) translate([end * (yz_motor_distance + motor_casing) / 2, 0, 3]) linear_extrude(height = end_height, convexity = 5) square(motor_casing, center = true);
