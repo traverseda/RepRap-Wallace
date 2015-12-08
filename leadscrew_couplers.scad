@@ -5,7 +5,7 @@ include <wallace.scad>;
 module leadscrew_coupler() difference() {
 	linear_extrude(height = 10 + rod_nut_size / 2 + 1, convexity = 5) difference() {
 		circle(motor_screw_spacing / 2 - 1);
-		circle(motor_shaft_size * da6, $fn = 6);
+		#circle(motor_shaft_size * da6, $fn = 6);
 	}
 	translate([0, 0, m3_nut_size / 2]) rotate([-90, 0, 90]) {
 		cylinder(r = m3_size * da6, h = motor_screw_spacing / 2 + 1);

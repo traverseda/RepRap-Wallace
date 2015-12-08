@@ -6,7 +6,7 @@ module bed_mount() difference() {
 	linear_extrude(height = 10, convexity = 5) difference() {
 		union() {
 			rotate(180 / 8) circle((rod_size + 8) * da8, $fn = 8);
-			translate([0, -rod_size / 2 - 4, 0]) square([rod_size / 2 + 8, max(rod_size + 8, rod_size / 2 + 4 + bed_mount_height)]);
+			translate([0, -rod_size / 2 - 4, 0]) square([rod_size / 2 + 8, max(rod_size + 8, rod_size / 2 + 4 )]);
 		}
 		rotate(180 / 8) circle(rod_size * da8, $fn = 8);
 		translate([0, -rod_size / (1 + sqrt(2)) / 2, 0]) square([rod_size + 10, rod_size / (1 + sqrt(2))]);

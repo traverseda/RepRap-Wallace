@@ -35,7 +35,11 @@ module x_end(motor = 0) mirror([(motor == 0) ? 1 : 0, 0, 0]) difference() {
 				translate([-(motor_casing / 2 + rod_size + bearing_size + 6) / 2, 0, 0]) square([motor_casing / 2 + rod_size + bearing_size / 2 + 3 + 3, bearing_size / 2 + 3 + rod_size / 2]);
 				translate([-(motor_casing / 2 + rod_size + bearing_size + 6) / 2 + rod_size / 2 + 2, 0, 0]) square([(motor_casing / 2 + rod_size + bearing_size + 6) / 2 + 5 - rod_size / 2 - 2, bearing_size / 2 + 6 + rod_size]);
 				translate([-(motor_casing / 2 + rod_size + bearing_size + 6) / 2 + rod_size / 2 + 2, bearing_size / 2 + rod_size / 2 + 4, 0]) circle(rod_size / 2 + 2);
-				translate([0, bearing_size / 2 + rod_size + 6, 0]) square(10, center = true);
+                if (use_rod_for_x_ends) {
+				    translate([0, bearing_size / 2 + rod_size + 6, 0]) square([rod_nut_size,10], center = true);
+                } else {
+				    translate([0, bearing_size / 2 + rod_size + 6, 0]) square(10, center = true);
+                }
 			}
 			square([motor_casing / 2 + rod_size, 3], center = true);
 			translate([(motor_casing / 4 + rod_size / 2), 0, 0]) circle(bearing_size / 2 - .5, $fn = 30);
@@ -66,8 +70,13 @@ module x_end(motor = 0) mirror([(motor == 0) ? 1 : 0, 0, 0]) difference() {
 		}
 		// holes for clamping screws
 		rotate([90, 0, 0]) {
-			cylinder(r = m3_size * da6, h = 100, center = true, $fn = 6);
-			translate([0, 0, bearing_size / 4 + .5]) cylinder(r = m3_nut_size * da6, h = 100, center = false, $fn = 6);
+            if (use_rod_for_x_ends) {
+                cylinder(r = rod_size * da6, h = 100, center = true, $fn = 6);
+			    translate([0, 0, bearing_size / 4 + .5]) cylinder(r = rod_nut_size * da6, h = 100, center = false, $fn = 6);
+            } else {
+                cylinder(r = m3_size * da6, h = 100, center = true, $fn = 6);
+			    translate([0, 0, bearing_size / 4 + .5]) cylinder(r = m3_nut_size * da6, h = 100, center = false, $fn = 6);
+            }
 		}
 	}
     // hole for the z drive bolt
