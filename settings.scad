@@ -19,6 +19,7 @@ m3_nut_size = 7;
 // m3 nut height is because tristan doesn't know the height of an m3 nut, it is not implemented everywhere, just on the z stop in base_end_2off.scad
 m3_nut_height = 3;
 m4_size = 4.5;
+m4_nut_size = 7.5;
 motor_shaft_size = 5.5;
 
 z_stop_screw_spacing = 20;
